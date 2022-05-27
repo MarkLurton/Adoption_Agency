@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% block title %} Add Pet {% endblock %} {% block
+content %}
+<img
+  class="w-25 mw-25 h-25"
+  style="object-fit: contain"
+  src="{{pet.photo_url}}"
+/>
+{% for msg in get_flashed_messages() %}
+<p>{{msg}}</p>
+{% endfor %}
+<h1 class="display-1">{{pet.name}}</h1>
+<p>Species: {{pet.species}}</p>
+{% if pet.age %}
+<p>Age: {{pet.age}}</p>
+{% endif %} {% if pet.notes %}
+<p>Notes: {{pet.notes}}</p>
+{% endif %}
+<div class="container">
+  <h2 class="display-2 text-center">Edit Info</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form method="POST">
+        {{ form.hidden_tag() }} {% for field in form if field.widget.input_type
+        != 'hidden' %}
+
+        <div class="form-group">
+          {{ field.label }} {{ field(class_="form-control") }} {% for err in
+          field.errors %}
+          <small class="form-text text-danger"> {{ err }} </small>
+          {% endfor %}
+        </div>
+
+        {% endfor %}
+
+        <button class="btn btn-success btn-lg" type="submit">Submit</button>
+        <a href="/" class="btn btn-info btn-lg">Go Back</a>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
